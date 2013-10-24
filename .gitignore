@@ -1,0 +1,153 @@
+ var gameFacts = {
+  	"gtaFacts":{
+  	"headTitle": "Grand Theft Auto",
+   "footTitle": "List of gta games",
+  "theStory": [
+  	{"name":"Grand Theft Auto 3", "description":"The first GTA people truly cared about, thanks to the third person mode it made the game a legend."},
+ 	{"name":"Grand Theft Auto 4", "description":"GTA4 was the first Grand theft auto on the PS3 and Xbox 360, it brought GTA3 back with better Graphics!"},
+  	{"name":"Grand Theft Auto 5", "description":"The latest and I may say the Greatest GTA since the third installment, it's not just about the great graphics no its about the ONLINE! Once again GTA has been revolutionized!!!"}
+  ]
+ },
+  "codFacts": {
+  	"headTitle": "Call of Duty",
+   "footTitle": "List of cod games",
+   "theStory": [
+     {"name": "Modern Warfare", "description":"cod Modern warfare was an online shooting game that took call of duty out of world war 2, and everybody loved it!"},
+     {"name": "Black Ops", "description":"Black ops for me Inroduced the crazed ZOMBIE Mode, and the game wasn't really current it was set in the 60's but still very cool."},
+     {"name": "Black Ops 2", "description":"Black Ops 2 is a good follow up the BO1 it takes place in the some what distant future, what else can I say it's cod so you know it's awesome!!"}        
+ ]
+   }
+ };
+
+var win = Ti.UI.createWindow();
+
+
+var navWindow =Ti.UI.createWindow({
+	title: "Game Facts",
+	modal: true,
+	backgroundColor: "#fff"
+});
+
+var navGroup = Ti.UI.iPhone.createNavigationGroup({
+	window: navWindow
+});
+
+/*var gtaSeries = 
+[{title:"Grand Theft Auto 3", description: "The first GTA people truly cared about, thanks to the third person mode it made the game a legend. "}, 
+ {title:"Grand Theft Auto 4", description: "GTA4 was the first Grand theft auto on the PS3 and Xbox 360, it brought GTA3 back with better Graphics!"}, 
+ {title:"Grand Theft Auto 5", description: "The latest and I may say the Greatest GTA since the third installment, it's not about the great graphics no its about the ONLINE! Once again GTA has been revolutionized!!!"}];
+ 
+  var callOfDutySeries = [
+  {title:"Modern Warfare"}, 
+  {title: "Black Ops"},
+  {title: "Black Ops 2"}];*/
+  
+
+
+var table = Ti.UI.createTableView({
+	style: Ti.UI.iPhone.TableViewStyle.GROUPED,
+
+});
+/*var getDetails = function(){
+	var detailWindow = Ti.UI.createWindow({
+		backgroundColor: "#fff",
+		title: this.title,
+		modal:true
+	});
+	var detailText = Ti.UI.createLabel({
+		text: this.desc,
+		font:{fontsize: 18, fontFamily: "Arial"}
+	});
+	detailWindow.add(detailText);
+	navGroup.open(detailWindow, {animation: true});
+};*/
+
+/*var gtaDetails = function(){
+	var detailWindow = Ti.UI.createWindow({
+		backgroundColor: "#fff",
+		title: this.title,
+		modal:true
+	});
+	var detailText = Ti.UI.createLabel({
+		text: this.desc,
+		font:{fontsize: 18, fontFamily: "Arial"}
+	});
+	detailWindow.add(detailText);
+	navGroup.open(detailWindow, {animation: true});
+};*/
+var mySections = [];
+for(n in gameFacts){
+	var tableSection = Ti.UI.createTableViewSection({
+		headerTitle: gameFacts[n].headTitle,
+		footerTitle: gameFacts[n].footTitle
+    
+	
+	});
+	for(var i=0, j=gameFacts[n].theStory.length; i<j; i++){
+		var theRow = Ti.UI.createTableViewRow({
+ 		title:gameFacts[n].theStory[i].name,
+ 		desc: gameFacts[n].theStory[i].description,
+ 		hasChild: true
+ 		
+ 		
+ 	});
+ 	tableSection.add(theRow);
+ 	
+	}
+	mySections.push(tableSection);
+}
+
+table.setData(mySections);
+
+/* for(i=0, j = gtaSeries.length; i<j; i++){
+ 	var gtaRow = Ti.UI.createTableViewRow({
+ 		title: gtaSeries[i].title,
+ 		desc: gtaSeries[i].description,
+ 		hasChild: true
+ 		
+ 		
+ 	});
+ 	gtaSection.add(gtaRow);
+ 	gtaRow.addEventListener("click", gtaDetails);
+ }*/
+ 
+ 
+
+
+/*var codSection = Ti.UI.createTableViewSection({
+	headerTitle: "Call of Duty",
+	footerTitle: "List of cod games"
+});
+
+ for(i=0, j = gtaSeries.length; i<j; i++){
+ 	var codRow = Ti.UI.createTableViewRow({
+ 		title: callOfDutySeries[i].title,
+ 		hasChild: true
+ 		
+ 	});
+ 	codSection.add(codRow);
+ 	codRow.addEventListener("click", codDetails);
+ }*/
+
+
+
+navWindow.add(table);
+win.add(navGroup);
+win.open();
+
+table.addEventListener("click", function(eventData){
+	  console.log(eventData.source.title);
+	  var detailWindow = Ti.UI.createWindow({
+		backgroundColor: "#fff",
+		title: eventData.source.title,
+		modal:true
+	});
+	var detailText = Ti.UI.createLabel({
+		text: eventData.source.desc,
+		font:{fontsize: 18, fontFamily: "Arial"}
+	});
+	detailWindow.add(detailText);
+	navGroup.open(detailWindow, {animation: true});
+});
+
+//theRow.addEventListener("click", getDetails);
